@@ -41,7 +41,7 @@
                     </div>
                     <div>
                         <p class="text-sm text-gray-500">Questions publiées</p>
-                        <p class="text-2xl font-bold text-gray-800">3,245</p>
+                        <p class="text-2xl font-bold text-gray-800">{{$countQuestions}}</p>
                     </div>
                 </div>
                 <div class="bg-white rounded-lg shadow-sm p-6 flex items-center">
@@ -50,7 +50,7 @@
                     </div>
                     <div>
                         <p class="text-sm text-gray-500">Réponses partagées</p>
-                        <p class="text-2xl font-bold text-gray-800">12,879</p>
+                        <p class="text-2xl font-bold text-gray-800">{{$countReponses}}</p>
                     </div>
                 </div>
                 <div class="bg-white rounded-lg shadow-sm p-6 flex items-center">
@@ -59,7 +59,7 @@
                     </div>
                     <div>
                         <p class="text-sm text-gray-500">Utilisateurs actifs</p>
-                        <p class="text-2xl font-bold text-gray-800">1,567</p>
+                        <p class="text-2xl font-bold text-gray-800">{{$countUsers}}</p>
                     </div>
                 </div>
             </div>
@@ -86,22 +86,24 @@
 
             <!-- Liste de questions -->
             <div class="space-y-4">
-                <!-- Question 1 -->
+
+                @foreach ($questions as $question)
+                   
                 <div class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
                     <div class="p-6">
                         <div class="flex justify-between items-start">
                             <h3 class="text-lg font-semibold text-gray-800 hover:text-blue-600">
-                                <a href="#">Où trouver le meilleur boulanger dans le 18ème arrondissement ?</a>
+                                <a href="/details/{{ $question->id }}">{{ $question->title }}</a>
                             </h3>
                             <button class="text-gray-400 hover:text-blue-500">
                                 <i class="far fa-bookmark"></i>
                             </button>
                         </div>
-                        <p class="text-gray-600 mt-2">Je cherche une bonne boulangerie traditionnelle qui fait des pains au levain. J'habite près de Montmartre et je préfère ne pas faire plus de 15 minutes à pied.</p>
+                        <p class="text-gray-600 mt-2">{{ $question->content }}</p>
                         <div class="flex items-center text-sm text-gray-500 mt-4">
                             <div class="flex items-center mr-4">
                                 <i class="fas fa-map-marker-alt mr-1 text-red-500"></i>
-                                <span>Paris 18e (1.2 km)</span>
+                                <span>{{ $question->location }} 18e (1.2 km)</span>
                             </div>
                             <div class="flex items-center mr-4">
                                 <i class="far fa-calendar-alt mr-1"></i>
@@ -109,81 +111,13 @@
                             </div>
                             <div class="flex items-center mr-4">
                                 <i class="far fa-comment mr-1"></i>
-                                <span>8 réponses</span>
-                            </div>
-                            <div class="flex items-center">
-                                <i class="far fa-eye mr-1"></i>
-                                <span>42 vues</span>
+                                <span>{{$question->reponses_count}} réponses</span>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <!-- Question 2 -->
-                <div class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
-                    <div class="p-6">
-                        <div class="flex justify-between items-start">
-                            <h3 class="text-lg font-semibold text-gray-800 hover:text-blue-600">
-                                <a href="#">Problème de stationnement rue des Martyrs - solutions ?</a>
-                            </h3>
-                            <button class="text-gray-400 hover:text-blue-500">
-                                <i class="far fa-bookmark"></i>
-                            </button>
-                        </div>
-                        <p class="text-gray-600 mt-2">Depuis les travaux, il est impossible de trouver une place. Y a-t-il des parkings abordables dans le coin ou des astuces pour se garer facilement ? J'ai vraiment besoin d'aide.</p>
-                        <div class="flex items-center text-sm text-gray-500 mt-4">
-                            <div class="flex items-center mr-4">
-                                <i class="fas fa-map-marker-alt mr-1 text-red-500"></i>
-                                <span>Paris 9e (2.8 km)</span>
-                            </div>
-                            <div class="flex items-center mr-4">
-                                <i class="far fa-calendar-alt mr-1"></i>
-                                <span>Il y a 5 heures</span>
-                            </div>
-                            <div class="flex items-center mr-4">
-                                <i class="far fa-comment mr-1"></i>
-                                <span>15 réponses</span>
-                            </div>
-                            <div class="flex items-center">
-                                <i class="far fa-eye mr-1"></i>
-                                <span>93 vues</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Question 3 -->
-                <div class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
-                    <div class="p-6">
-                        <div class="flex justify-between items-start">
-                            <h3 class="text-lg font-semibold text-gray-800 hover:text-blue-600">
-                                <a href="#">Recommandation pour un vétérinaire d'urgence ouvert le dimanche ?</a>
-                            </h3>
-                            <button class="text-blue-500 hover:text-blue-600">
-                                <i class="fas fa-bookmark"></i>
-                            </button>
-                        </div>
-                        <p class="text-gray-600 mt-2">Mon chat a l'air malade et je m'inquiète. Connaissez-vous une clinique vétérinaire fiable qui est ouverte le dimanche dans le quartier ? Prix et qualité de service sont importants.</p>
-                        <div class="flex items-center text-sm text-gray-500 mt-4">
-                            <div class="flex items-center mr-4">
-                                <i class="fas fa-map-marker-alt mr-1 text-red-500"></i>
-                                <span>Paris 15e (4.6 km)</span>
-                            </div>
-                            <div class="flex items-center mr-4">
-                                <i class="far fa-calendar-alt mr-1"></i>
-                                <span>Hier</span>
-                            </div>
-                            <div class="flex items-center mr-4">
-                                <i class="far fa-comment mr-1"></i>
-                                <span>6 réponses</span>
-                            </div>
-                            <div class="flex items-center">
-                                <i class="far fa-eye mr-1"></i>
-                                <span>37 vues</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
+            
 
                 <!-- Plus de questions -->
                 <div class="text-center mt-8">
@@ -201,22 +135,8 @@
             <h2 class="text-2xl font-bold text-gray-800 mb-8 text-center">Questions populaires cette semaine</h2>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Question populaire 1 -->
-                <div class="bg-white rounded-lg shadow-sm p-5 hover:shadow-md transition-shadow">
-                    <div class="flex items-start">
-                        <div class="bg-yellow-100 rounded-full p-3 mr-4">
-                            <i class="fas fa-award text-yellow-600"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-medium text-gray-800 hover:text-blue-600">
-                                <a href="#">Meilleure école primaire dans le quartier Bastille ?</a>
-                            </h3>
-                            <p class="text-sm text-gray-500 mt-1">48 réponses · 312 vues</p>
-                        </div>
-                    </div>
-                </div>
                 
-                <!-- Question populaire 2 -->
+                @foreach ($popularQuestions as $question)
                 <div class="bg-white rounded-lg shadow-sm p-5 hover:shadow-md transition-shadow">
                     <div class="flex items-start">
                         <div class="bg-yellow-100 rounded-full p-3 mr-4">
@@ -224,27 +144,13 @@
                         </div>
                         <div>
                             <h3 class="font-medium text-gray-800 hover:text-blue-600">
-                                <a href="#">Travaux métro ligne 4 : quelles alternatives ?</a>
+                                <a href="#">{{$question->title}}</a>
                             </h3>
-                            <p class="text-sm text-gray-500 mt-1">36 réponses · 289 vues</p>
+                            <p class="text-sm text-gray-500 mt-1">{{$question->reponses_count}} réponses</p>
                         </div>
                     </div>
                 </div>
-                
-                <!-- Question populaire 3 -->
-                <div class="bg-white rounded-lg shadow-sm p-5 hover:shadow-md transition-shadow">
-                    <div class="flex items-start">
-                        <div class="bg-yellow-100 rounded-full p-3 mr-4">
-                            <i class="fas fa-award text-yellow-600"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-medium text-gray-800 hover:text-blue-600">
-                                <a href="#">Meilleur endroit pour pique-niquer au Bois de Vincennes</a>
-                            </h3>
-                            <p class="text-sm text-gray-500 mt-1">29 réponses · 257 vues</p>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>
@@ -275,5 +181,9 @@
     </div>
 
 @endsection
+
+
+
+
 
      
