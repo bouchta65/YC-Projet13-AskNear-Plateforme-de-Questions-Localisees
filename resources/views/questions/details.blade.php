@@ -26,8 +26,10 @@
         <div class="p-6 border-b">
           <div class="flex items-center justify-between mb-4">
             <div class="flex items-center">
-              <img src="{{ asset('assets/images/avatars/default.jpg') }}" alt="Avatar" class="w-12 h-12 rounded-full object-cover mr-4">
-              <div>
+                <div class="w-12 h-12 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold text-lg mr-4">
+                    A🞄E
+                </div>
+                              <div>
                 <h5 class="font-medium">Amal Benkirane</h5>
                 <p class="text-sm text-gray-500">Membre depuis 2023 • Rabat</p>
               </div>
@@ -37,26 +39,18 @@
             </div>
           </div>
           
-          <h1 class="text-2xl font-bold text-gray-800 mb-3">Où trouver les meilleurs restaurants de poisson frais à Essaouira?</h1>
+          <h1 class="text-2xl font-bold text-gray-800 mb-3">{{ $question->title }}</h1>
           
           <!-- Question tags -->
           <div class="flex flex-wrap gap-2 mb-4">
-            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">Essaouira</span>
-            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">Restaurants</span>
-            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">Fruits de mer</span>
+            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">{{ $question->location }}</span>
           </div>
           
           <!-- Question content -->
           <div class="text-gray-700 mb-6">
-            <p>Je prévois un voyage à Essaouira le mois prochain et j'aimerais savoir quels sont les meilleurs restaurants où manger du poisson frais. Je recherche des endroits authentiques, pas trop touristiques, où les locaux vont.</p>
-            <p class="mt-3">Avez-vous des recommandations de restaurants qui servent du poisson frais pêché du jour? Je suis particulièrement intéressé par les plats traditionnels marocains à base de poisson.</p>
+            <p>{{ $question->content }}</p>
           </div>
           
-          <!-- Optional image -->
-          <div class="mb-6 rounded-lg overflow-hidden">
-            <img src="{{ asset('assets/images/essaouira-port.jpg') }}" alt="Port d'Essaouira" class="w-full h-auto">
-            <p class="text-sm text-gray-500 mt-1">Port d'Essaouira</p>
-          </div>
           
           <!-- Question actions -->
           <div class="flex items-center justify-between">
@@ -101,27 +95,15 @@
       <!-- Answer form -->
       <div class="bg-white rounded-lg shadow-sm mb-8 p-6">
         <h2 class="text-xl font-bold text-gray-800 mb-4">Votre réponse</h2>
-        <form>
-          <div class="mb-4">
-            <textarea rows="4" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
+        <form action="{{ route('reponse.save', ['id' => $question->id]) }}" method="POST">
+            @csrf
+            <div class="mb-4">
+            <textarea name="content" rows="4" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
                    placeholder="Partagez votre connaissance locale..."></textarea>
           </div>
-          
-          <!-- Image upload option -->
-          <div class="mb-4 flex items-center">
-            <button type="button" class="flex items-center text-gray-600 hover:text-blue-600">
-              <i class="far fa-image mr-2"></i>
-              <span>Ajouter une photo</span>
-            </button>
-          </div>
+
           
           <div class="flex items-center justify-between">
-            <div>
-              <label class="flex items-center text-sm text-gray-600">
-                <input type="checkbox" class="mr-2 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
-                Recevoir des notifications pour cette question
-              </label>
-            </div>
             <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium">
               Publier votre réponse
             </button>
@@ -133,7 +115,7 @@
       <div>
         <h2 class="text-xl font-bold text-gray-800 mb-6 flex items-center">
           <span>Réponses</span>
-          <span class="ml-2 px-2 py-1 bg-gray-200 text-gray-700 text-sm rounded-full">8</span>
+          <span class="ml-2 px-2 py-1 bg-gray-200 text-gray-700 text-sm rounded-full">{{ $countReponses }}</span>
         </h2>
         
         <!-- Sorting options -->
@@ -149,12 +131,14 @@
         <!-- Individual responses -->
         <div class="space-y-6">
           <!-- Response 1 -->
+          @foreach($reponses as $reponse)
           <div class="bg-white rounded-lg shadow-sm p-6 border-l-4 border-blue-500">
             <div class="flex items-center justify-between mb-4">
               <div class="flex items-center">
-                <img src="{{ asset('assets/images/avatars/user1.jpg') }}" alt="Avatar" class="w-10 h-10 rounded-full object-cover mr-3">
-                <div>
-                  <h5 class="font-medium">Hassan Ouazzani</h5>
+                <div class="w-12 h-12 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold text-lg mr-4">
+                    A🞄E
+                </div>                <div>
+                  <h5 class="font-medium">{{ $reponse->user->name }}</h5>
                   <p class="text-xs text-gray-500">Résident d'Essaouira • 15 ans</p>
                 </div>
               </div>
@@ -164,70 +148,13 @@
             </div>
             
             <div class="text-gray-700 mb-4">
-              <p>Je vis à Essaouira depuis toujours, et je vous recommande vivement le restaurant "Le Petit Bleu" près du port. Les pêcheurs apportent leur prise chaque matin et le chef prépare des plats incroyables!</p>
-              <p class="mt-2">Un autre endroit authentique est le petit restaurant "Chez Hassan" dans la médina. Ce n'est pas luxueux mais c'est là où nous, locaux, allons pour des tajines de poisson délicieux.</p>
+              <p>{{ $reponse->content }}</p>
             </div>
             
-            <!-- Response actions -->
-            <div class="flex items-center justify-between pt-3 border-t">
-              <div class="flex items-center space-x-4">
-                <button class="flex items-center gap-1 text-gray-500 hover:text-blue-600">
-                  <i class="far fa-thumbs-up"></i>
-                  <span>12</span>
-                </button>
-                <button class="flex items-center gap-1 text-gray-500 hover:text-red-600">
-                  <i class="far fa-thumbs-down"></i>
-                  <span>0</span>
-                </button>
-              </div>
-              <button class="text-sm text-blue-600 hover:text-blue-800">
-                Répondre
-              </button>
-            </div>
+       
           </div>
-          
-          <!-- Response 2 -->
-          <div class="bg-white rounded-lg shadow-sm p-6">
-            <div class="flex items-center justify-between mb-4">
-              <div class="flex items-center">
-                <img src="{{ asset('assets/images/avatars/user2.jpg') }}" alt="Avatar" class="w-10 h-10 rounded-full object-cover mr-3">
-                <div>
-                  <h5 class="font-medium">Fatima Zahra</h5>
-                  <p class="text-xs text-gray-500">Guide touristique • Essaouira</p>
-                </div>
-              </div>
-              <div class="text-sm text-gray-500">
-                <span>Il y a 2 jours</span>
-              </div>
-            </div>
-            
-            <div class="text-gray-700 mb-4">
-              <p>Pour une expérience vraiment authentique, je conseille d'aller directement au port le matin (vers 10h) et de choisir votre poisson fraîchement pêché aux étals, puis de l'apporter à l'un des grilleurs sur place.</p>
-              <p class="mt-2">Sinon, "La Découverte" dans la médina propose d'excellents tajines de poisson et sardines grillées dans une ambiance familiale.</p>
-            </div>
-            
-            <!-- Image in response -->
-            <div class="mb-4 rounded-lg overflow-hidden">
-              <img src="{{ asset('assets/images/essaouira-grilled-fish.jpg') }}" alt="Poisson grillé" class="w-full h-auto">
-            </div>
-            
-            <!-- Response actions -->
-            <div class="flex items-center justify-between pt-3 border-t">
-              <div class="flex items-center space-x-4">
-                <button class="flex items-center gap-1 text-gray-500 hover:text-blue-600">
-                  <i class="far fa-thumbs-up"></i>
-                  <span>8</span>
-                </button>
-                <button class="flex items-center gap-1 text-gray-500 hover:text-red-600">
-                  <i class="far fa-thumbs-down"></i>
-                  <span>1</span>
-                </button>
-              </div>
-              <button class="text-sm text-blue-600 hover:text-blue-800">
-                Répondre
-              </button>
-            </div>
-          </div>
+          @endforeach
+       
           
           <!-- Load more responses button -->
           <div class="text-center mt-8">
