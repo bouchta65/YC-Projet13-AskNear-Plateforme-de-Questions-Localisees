@@ -37,7 +37,7 @@
                     <a href="#" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">
                         <i class="fas fa-user mr-1"></i> Profil
                     </a>
-                    <a href="#" class="bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded-md text-sm font-medium">
+                    <a href="#" onclick="toggleModal(true)" class="bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded-md text-sm font-medium">
                         <i class="fas fa-plus-circle mr-1"></i> Poser une question
                     </a>
                 </div>
@@ -114,3 +114,72 @@
     </footer>
 </body>
 </html>
+<div id="questionModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-md hidden transition-opacity duration-300">
+    <div class="bg-white w-full max-w-lg p-6 rounded-2xl shadow-2xl transform scale-95 transition-all duration-300">
+        <div class="flex justify-between items-center border-b pb-3">
+            <h2 class="text-2xl font-bold text-gray-800">Publier une Question</h2>
+            <button onclick="toggleModal(false)" class="text-gray-500 hover:text-gray-800 text-2xl font-bold">&times;</button>
+        </div>
+
+        <form action="{{ route('questions.save') }}" method="POST" class="space-y-5 mt-4">
+            @csrf 
+            
+            <div>
+                <label for="title" class="block text-gray-700 font-semibold mb-1">Titre</label>
+                <input type="text" id="title" name="title" placeholder="Ex: Où trouver un bon café ?" 
+                       class="w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-300 transition"
+                       value="{{ old('title') }}" required>
+                @error('title')
+                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div>
+                <label for="content" class="block text-gray-700 font-semibold mb-1">Détail</label>
+                <textarea id="content" name="content" rows="4" placeholder="Décrivez votre question..."
+                          class="w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-300 transition" required>{{ old('content') }}</textarea>
+                @error('content')
+                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div>
+                <label for="location" class="block text-gray-700 font-semibold mb-1">Localisation</label>
+                <select id="location" name="location"
+                        class="w-full px-4 py-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-300 transition" required>
+                    <option value="" disabled selected>Chargement...</option>
+                </select>
+
+                @error('location')
+                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div class="flex justify-end space-x-3">
+                <button type="button" onclick="toggleModal(false)" class="bg-gray-300 text-gray-700 px-5 py-2.5 rounded-lg hover:bg-gray-400 transition shadow-md">
+                    Annuler
+                </button>
+                <button type="submit" class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-2.5 rounded-lg shadow-lg hover:shadow-xl transition">
+                    Publier
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script>
+    function toggleModal(show) {
+        const modal = document.getElementById("questionModal");
+        if (show) {
+            modal.classList.remove("hidden");
+            modal.classList.add("flex", "opacity-100", "scale-100");
+        } else {
+            modal.classList.remove("flex", "opacity-100", "scale-100");
+            modal.classList.add("hidden");
+        }
+    }
+</script>
+
+<script src="{{ asset('assets/js/fitchCities.js') }}"></script>  
+
