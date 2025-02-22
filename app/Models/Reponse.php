@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Reponse extends Model {
     use HasFactory;
 
+protected $table = 'reponse';
+
   protected $fillable=[
     'content',
     'question_id',
@@ -18,8 +20,7 @@ class Reponse extends Model {
   }
 
   public function user(){
-    return $this->belongsTo(User::class);
-  }
+it a  }
 
   
 
