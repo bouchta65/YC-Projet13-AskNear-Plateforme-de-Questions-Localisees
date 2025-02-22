@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('question', function (Blueprint $table) {
             $table->id();
-            $table->string('titre');
-            $table->text('contenu');
-            $table->string('emplacement');
-            $table->foreignId('utilisateur_id')->constrained('users')->onDelete('cascade');
-            $table->timestamp('date_publication')->useCurrent();
+            $table->string('title');
+            $table->text('content');
+            $table->string('location');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->timestamp('published_at')->useCurrent();
             $table->timestamps();
         });
     }

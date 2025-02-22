@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('reponse', function (Blueprint $table) {
             $table->id();
-            $table->text('contenu');
+            $table->text('content');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('question_id')->constrained('question')->onDelete('cascade');
-            $table->timestamp('date_publication')->useCurrent();
+            $table->timestamp('published_at')->useCurrent();
             $table->timestamps();
 
         });
