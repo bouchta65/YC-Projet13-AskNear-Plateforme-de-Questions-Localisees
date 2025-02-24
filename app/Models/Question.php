@@ -31,10 +31,11 @@ class Question extends Model
         return $this->hasMany(Reponse::class);
     }
 
-    public function favorites()
-    {
-        return $this->belongsToMany(User::class, 'favori');
+    public function favoris() {
+        return $this->hasMany(Favori::class);
     }
+
+    
 
 
 

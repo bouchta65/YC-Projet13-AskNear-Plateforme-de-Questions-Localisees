@@ -20,7 +20,8 @@ protected $table = 'reponse';
   }
 
   public function user(){
-it a  }
+    return $this->belongsTo(User::class);
+  }
 
   
 
