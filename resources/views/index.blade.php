@@ -58,7 +58,7 @@
                         <i class="fas fa-users text-purple-600 text-xl"></i>
                     </div>
                     <div>
-                        <p class="text-sm text-gray-500">Utilisateurs actifs</p>
+                        <p class="text-sm text-gray-500">Utilisateurs</p>
                         <p class="text-2xl font-bold text-gray-800">{{$countUsers}}</p>
                     </div>
                 </div>
@@ -95,19 +95,22 @@
                             <h3 class="text-lg font-semibold text-gray-800 hover:text-blue-600">
                                 <a href="/details/{{ $question->id }}">{{ $question->title }}</a>
                             </h3>
-                            <button class="text-gray-400 hover:text-blue-500">
+                            <form action="{{ route('question.favori', $question->id) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="text-gray-400 hover:text-blue-500">
                                 <i class="far fa-bookmark"></i>
                             </button>
+                        </form>
                         </div>
                         <p class="text-gray-600 mt-2">{{ $question->content }}</p>
                         <div class="flex items-center text-sm text-gray-500 mt-4">
                             <div class="flex items-center mr-4">
                                 <i class="fas fa-map-marker-alt mr-1 text-red-500"></i>
-                                <span>{{ $question->location }} 18e (1.2 km)</span>
+                                <span>{{ $question->location }}</span>
                             </div>
                             <div class="flex items-center mr-4">
                                 <i class="far fa-calendar-alt mr-1"></i>
-                                <span>Il y a 2 heures</span>
+                                <span>{{ $question->published_at }}</span>
                             </div>
                             <div class="flex items-center mr-4">
                                 <i class="far fa-comment mr-1"></i>
@@ -144,7 +147,7 @@
                         </div>
                         <div>
                             <h3 class="font-medium text-gray-800 hover:text-blue-600">
-                                <a href="#">{{$question->title}}</a>
+                                <a href="/details/{{ $question->id }}">{{$question->title}}</a>
                             </h3>
                             <p class="text-sm text-gray-500 mt-1">{{$question->reponses_count}} réponses</p>
                         </div>
@@ -161,12 +164,9 @@
             <h2 class="text-3xl font-bold mb-4">Vous avez une question locale ?</h2>
             <p class="text-blue-100 mb-8">Rejoignez notre communauté de 1 500+ utilisateurs qui s'entraident chaque jour pour résoudre des problèmes locaux.</p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="/register" class="bg-white text-blue-600 hover:bg-gray-100 px-6 py-3 rounded-md font-medium">
-                    <i class="fas fa-user-plus mr-2"></i> Créer un compte
-                </a>
-                <a href="/ask" class="bg-blue-500 text-white hover:bg-blue-700 border border-blue-300 px-6 py-3 rounded-md font-medium">
-                    <i class="fas fa-question-circle mr-2"></i> Poser une question
-                </a>
+                <button onclick="@auth toggleModal(true) @else toggleLoginModal(true) @endauth" class="bg-blue-500 text-white hover:bg-blue-700 border border-blue-300 px-6 py-3 rounded-md font-medium">
+                    <i  class="fas fa-question-circle mr-2"></i> Poser une question
+                </button>
             </div>
         </div>
     </section>

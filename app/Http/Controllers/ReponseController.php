@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Reponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ReponseController extends Controller
 {
@@ -19,7 +20,7 @@ class ReponseController extends Controller
         $reponse = new Reponse();
         $reponse->content = $validated['content'];
         $reponse->published_at = now();
-        $reponse->user_id = 1;
+        $reponse->user_id = Auth::user()->id;;
         $reponse->question_id = $id;
         $reponse->save();
         return redirect('details/'.$id);
