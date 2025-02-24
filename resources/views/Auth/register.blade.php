@@ -12,22 +12,26 @@
         <!-- En-tête -->
         <div class="text-center p-5 bg-blue-50 rounded-t-lg border-b">
             <div class="inline-block bg-blue-500 p-2 rounded-full mb-2">
-                <i class="fas fa-map-marker-alt text-white text-xl"></i>
+                <i class="fas fa-user-plus text-white text-xl"></i>
             </div>
-            <h1 class="text-xl font-bold text-gray-800">Créer un compte</h1>
+            <h1 class="text-xl font-bold text-gray-800">Inscription</h1>
         </div>
 
         <!-- Formulaire -->
-        <form action="/register" method="POST" class="p-6">
-            <!-- Nom et Prénom (côte à côte) -->
-            <div class="grid grid-cols-2 gap-3 mb-4">
-                <div>
-                    <input type="text" name="firstname" placeholder="Prénom" required
-                           class="w-full py-2 px-3 border rounded-md text-sm">
-                </div>
-                <div>
-                    <input type="text" name="lastname" placeholder="Nom" required
-                           class="w-full py-2 px-3 border rounded-md text-sm">
+        <form method="POST" action="{{ route('register') }}" class="p-6">
+            @csrf
+
+            <!-- Nom -->
+            <div class="mb-4">
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center">
+                        <i class="fas fa-user text-gray-400 text-sm"></i>
+                    </div>
+                    <input type="text" name="name" id="name" value="{{ old('name') }}" required autofocus autocomplete="name"
+                           class="w-full py-2 pl-10 pr-3 border rounded-md text-sm" placeholder="Nom complet">
+                    @error('name')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
             </div>
 
@@ -37,72 +41,49 @@
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center">
                         <i class="fas fa-envelope text-gray-400 text-sm"></i>
                     </div>
-                    <input type="email" name="email" placeholder="Email" required
-                           class="w-full py-2 pl-10 pr-3 border rounded-md text-sm">
+                    <input type="email" name="email" id="email" value="{{ old('email') }}" required autocomplete="email"
+                           class="w-full py-2 pl-10 pr-3 border rounded-md text-sm" placeholder="Adresse e-mail">
+                    @error('email')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
             </div>
 
-            <!-- Mot de passe (côte à côte) -->
-            <div class="grid grid-cols-2 gap-3 mb-4">
+            <!-- Mot de passe -->
+            <div class="mb-4">
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center">
                         <i class="fas fa-lock text-gray-400 text-sm"></i>
                     </div>
-                    <input type="password" name="password" placeholder="Mot de passe" required
-                           class="w-full py-2 pl-10 pr-3 border rounded-md text-sm">
-                </div>
-                <div>
-                    <input type="password" name="password_confirmation" placeholder="Confirmation" required
-                           class="w-full py-2 px-3 border rounded-md text-sm">
+                    <input type="password" name="password" id="password" required autocomplete="new-password"
+                           class="w-full py-2 pl-10 pr-3 border rounded-md text-sm" placeholder="Mot de passe">
+                    @error('password')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
             </div>
 
-            <!-- Localisation avec bouton -->
+            <!-- Confirmation du mot de passe -->
             <div class="mb-4">
-                <div class="flex items-center gap-2">
-                    <div class="relative flex-1">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center">
-                            <i class="fas fa-map-marker-alt text-gray-400 text-sm"></i>
-                        </div>
-                        <input type="text" name="location" placeholder="Votre localisation" 
-                               class="w-full py-2 pl-10 pr-3 border rounded-md text-sm">
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center">
+                        <i class="fas fa-lock text-gray-400 text-sm"></i>
                     </div>
-                    <button type="button" class="bg-gray-100 p-2 rounded-md text-blue-600 hover:bg-gray-200" title="Utiliser ma position">
-                        <i class="fas fa-crosshairs"></i>
-                    </button>
+                    <input type="password" name="password_confirmation" id="password_confirmation" required autocomplete="new-password"
+                           class="w-full py-2 pl-10 pr-3 border rounded-md text-sm" placeholder="Confirmer le mot de passe">
                 </div>
             </div>
 
-            <!-- Conditions -->
-            <div class="flex items-start mb-4">
-                <input id="terms" name="terms" type="checkbox" required
-                       class="mt-0.5 h-4 w-4 text-blue-600 border-gray-300 rounded">
-                <label for="terms" class="ml-2 text-xs text-gray-600">
-                    J'accepte les <a href="#" class="text-blue-600">conditions d'utilisation</a> et la 
-                    <a href="#" class="text-blue-600">politique de confidentialité</a>
-                </label>
-            </div>
-
-            <!-- Boutons -->
-            <button type="submit" 
-                    class="w-full py-2 px-4 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 mb-4">
-                Créer mon compte
+            <!-- Bouton d'inscription -->
+            <button type="submit"
+                    class="w-full py-2 px-4 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 mt-4">
+                <i class="fas fa-user-plus mr-1"></i> S'inscrire
             </button>
 
-            <!-- Options sociales -->
-            <div class="grid grid-cols-2 gap-3 mb-3">
-                <a href="#" class="flex justify-center items-center py-2 bg-white border rounded-md text-sm hover:bg-gray-50">
-                    <i class="fab fa-google text-red-600 mr-2"></i> Google
-                </a>
-                <a href="#" class="flex justify-center items-center py-2 bg-white border rounded-md text-sm hover:bg-gray-50">
-                    <i class="fab fa-facebook text-blue-600 mr-2"></i> Facebook
-                </a>
-            </div>
-
-            <!-- Lien de connexion -->
-            <div class="text-center text-sm">
+            <!-- Lien vers la connexion -->
+            <div class="text-center text-sm mt-4">
                 <p class="text-gray-600">
-                    Déjà inscrit? <a href="/login" class="text-blue-600">Connectez-vous</a>
+                    Vous avez déjà un compte? <a href="{{ route('login') }}" class="text-blue-600">Connectez-vous</a>
                 </p>
             </div>
         </form>
