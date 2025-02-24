@@ -27,15 +27,15 @@
           <div class="flex items-center justify-between mb-4">
             <div class="flex items-center">
                 <div class="w-12 h-12 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold text-lg mr-4">
-                    A🞄E
+                    <img src="{{ asset('assets/images/profile.jpg') }}">
                 </div>
                               <div>
-                <h5 class="font-medium">Amal Benkirane</h5>
+                <h5 class="font-medium">{{$question->user->name}}</h5>
                 <p class="text-sm text-gray-500">Membre depuis 2023 • Rabat</p>
               </div>
             </div>
             <div class="text-sm text-gray-500">
-              <span>Posté il y a 2 jours</span>
+              <span>{{ $question->published_at }}</span>
             </div>
           </div>
           
@@ -55,34 +55,17 @@
           <!-- Question actions -->
           <div class="flex items-center justify-between">
             <div class="flex items-center space-x-4">
-              <!-- Like button -->
-              <button id="likeButton" class="flex items-center gap-1 text-gray-500 hover:text-blue-600">
-                <i class="far fa-thumbs-up"></i>
-                <span id="likeCount">24</span>
-                <span class="sr-only md:not-sr-only text-sm">J'aime</span>
-              </button>
-              
-              <!-- Comment counter -->
-              <div class="flex items-center gap-1 text-gray-500">
+
+                <div class="flex items-center gap-1 text-gray-500">
                 <i class="far fa-comment"></i>
-                <span>8</span>
+                <span>{{ $countReponses }}</span>
                 <span class="sr-only md:not-sr-only text-sm">Réponses</span>
               </div>
               
-              <!-- View counter -->
-              <div class="flex items-center gap-1 text-gray-500">
-                <i class="far fa-eye"></i>
-                <span>137</span>
-                <span class="sr-only md:not-sr-only text-sm">Vues</span>
-              </div>
             </div>
             
             <!-- Share and save buttons -->
             <div class="flex items-center space-x-3">
-              <button class="text-gray-500 hover:text-blue-600">
-                <i class="far fa-share-square"></i>
-                <span class="sr-only">Partager</span>
-              </button>
               <button class="text-gray-500 hover:text-blue-600">
                 <i class="far fa-bookmark"></i>
                 <span class="sr-only">Sauvegarder</span>
@@ -130,20 +113,18 @@
         
         <!-- Individual responses -->
         <div class="space-y-6">
-          <!-- Response 1 -->
           @foreach($reponses as $reponse)
           <div class="bg-white rounded-lg shadow-sm p-6 border-l-4 border-blue-500">
             <div class="flex items-center justify-between mb-4">
               <div class="flex items-center">
                 <div class="w-12 h-12 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold text-lg mr-4">
-                    A🞄E
+                   <img src="{{ asset('assets/images/profile.jpg') }}" >
                 </div>                <div>
                   <h5 class="font-medium">{{ $reponse->user->name }}</h5>
-                  <p class="text-xs text-gray-500">Résident d'Essaouira • 15 ans</p>
                 </div>
               </div>
               <div class="text-sm text-gray-500">
-                <span>Il y a 1 jour</span>
+                <span>{{ $reponse->published_at }}</span>
               </div>
             </div>
             
@@ -168,34 +149,7 @@
     
     <!-- Sidebar -->
     <div class="md:col-span-1">
-      <!-- Author card -->
-      <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
-        <h3 class="text-lg font-semibold text-gray-800 mb-4">À propos de l'auteur</h3>
-        <div class="flex items-center mb-4">
-          <img src="{{ asset('assets/images/avatars/default.jpg') }}" alt="Avatar" class="w-16 h-16 rounded-full object-cover mr-4">
-          <div>
-            <h5 class="font-medium">Amal Benkirane</h5>
-            <p class="text-sm text-gray-500">Membre depuis avril 2023</p>
-          </div>
-        </div>
-        <div class="flex justify-between text-sm text-gray-600 mb-4">
-          <div class="text-center">
-            <div class="font-medium">12</div>
-            <div>Questions</div>
-          </div>
-          <div class="text-center">
-            <div class="font-medium">36</div>
-            <div>Réponses</div>
-          </div>
-          <div class="text-center">
-            <div class="font-medium">218</div>
-            <div>J'aimes</div>
-          </div>
-        </div>
-        <button class="w-full bg-gray-100 hover:bg-gray-200 text-gray-800 py-2 rounded-md font-medium">
-          Voir le profil
-        </button>
-      </div>
+      
       
       <!-- Related questions -->
       <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
