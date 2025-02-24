@@ -22,27 +22,41 @@
                         <span class="font-bold text-xl text-gray-800">AskNear</span>
                     </div>
                 </div>
-
+    
                 <!-- Liens de navigation -->
                 <div class="hidden md:flex items-center space-x-4">
-                    <a href="#" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">
+                    <a href="{{ url('/') }}"     class="{{ request()->is('/') ? 'text-blue-600 font-medium' : 'font-medium' }}">
                         <i class="fas fa-home mr-1"></i> Accueil
                     </a>
-                    <a href="#" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">
+                    <a href="{{ url('populaires') }}" class="{{ request()->is('populaires') ? 'text-blue-600 font-medium' : 'font-medium' }}">
                         <i class="fas fa-fire mr-1"></i> Populaires
                     </a>
-                    <a href="#" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">
+                    <a href="{{ url('favoris') }}" class="{{ request()->is('favoris') ? 'text-blue-600 font-medium' : 'font-medium' }}">
                         <i class="fas fa-star mr-1"></i> Favoris
                     </a>
-                    <a href="#" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">
-                        <i class="fas fa-user mr-1"></i> Profil
+                    <a href="{{ url('profile') }}" class="{{ request()->is('profile') ? 'text-blue-600 font-medium' : 'font-medium' }}">
+                        <i class="fas fa-user mr-1"></i> profile
                     </a>
-                    <a href="#" onclick="toggleModal(true)" class="bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded-md text-sm font-medium">
+                    <a href="#" onclick="@auth toggleModal(true) @else toggleLoginModal(true) @endauth" class="bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded-md text-sm font-medium">
                         <i class="fas fa-plus-circle mr-1"></i> Poser une question
                     </a>
+    
+                    @auth
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="bg-red-500 text-white hover:bg-red-600 px-4 py-2 rounded-md text-sm font-medium">
+                                <i class="fas fa-sign-out-alt mr-1"></i> Déconnexion
+                            </button>
+                        </form>
+                    @endauth
+    
+                    @guest
+                        <a href="{{ route('login') }}" class="bg-green-500 text-white hover:bg-green-600 px-4 py-2 rounded-md text-sm font-medium">
+                            <i class="fas fa-sign-in-alt mr-1"></i> Connexion
+                        </a>
+                    @endguest
                 </div>
-
-                <!-- Profil mobile -->
+    
                 <div class="flex items-center md:hidden">
                     <button class="p-2 rounded-md text-gray-600 hover:text-gray-800 hover:bg-gray-100">
                         <i class="fas fa-bars text-xl"></i>
@@ -51,6 +65,7 @@
             </div>
         </div>
     </nav>
+    
 
     <div >
         @yield('content') 
@@ -168,18 +183,26 @@
 </div>
 
 
-<script>
-    function toggleModal(show) {
-        const modal = document.getElementById("questionModal");
-        if (show) {
-            modal.classList.remove("hidden");
-            modal.classList.add("flex", "opacity-100", "scale-100");
-        } else {
-            modal.classList.remove("flex", "opacity-100", "scale-100");
-            modal.classList.add("hidden");
-        }
-    }
-</script>
+
+<div id="loginModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-md hidden transition-opacity duration-300">
+    <div class="bg-white w-full max-w-lg p-6 rounded-2xl shadow-2xl transform scale-95 transition-all duration-300">
+            <h2 class="text-xl font-bold mb-4">Connexion requise</h2>
+            <p class="mb-4">Vous devez être connecté pour poser une question.</p>
+            <div class="flex justify-end">
+                <button onclick="toggleLoginModal(false)" class="px-4 py-2 bg-gray-400 text-white rounded-md">Annuler</button>
+                <a href="{{ route('login') }}" class="px-4 py-2 bg-blue-600 text-white rounded-md ml-2">Se connecter</a>
+            </div>
+
+
+    </div>
+</div>
+
+<div id="loginModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+ 
+</div>
+
+
+<script src="{{ asset('assets/js/auth.js') }}"></script>  
 
 <script src="{{ asset('assets/js/fitchCities.js') }}"></script>  
 
