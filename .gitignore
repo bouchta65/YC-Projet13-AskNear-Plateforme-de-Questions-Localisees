@@ -21,8 +21,6 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
-/composer.json
-/composer.lock
 /psalm.xml
 /docker-compose.yml
 /docker-compose.override.yml
@@ -30,7 +28,6 @@ phpunit.xml
 /dockerfile
 /package.json
 /tailwind.config.js
-/.env.example
 /artisan
 /postcss.config.js
 /vite.config.js
