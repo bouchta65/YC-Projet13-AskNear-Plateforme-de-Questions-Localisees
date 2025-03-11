@@ -21,16 +21,3 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
-/psalm.xml
-/docker-compose.yml
-/docker-compose.override.yml
-phpunit.xml
-/dockerfile
-/package.json
-/tailwind.config.js
-/artisan
-/postcss.config.js
-/vite.config.js
-/editorconfig
-/.gitattributes
-/.editorconfig
